@@ -45,11 +45,12 @@ async function readArticles(files){
 }
 
 async function middleware(req,res,next){
+  greinasafn = [];
   greinar = await readArticles(myFiles);
   //console.log("greinar[1]" + greinar[1]);
   for (let i = 0; i < greinar.length; i++) {
    const obj = await metaMarked(greinar[i].toString('utf8'));
-   greinaSafn.push(obj);
+    greinaSafn.push(obj);
    console.log(greinaSafn[i].html + " third");
   }
 
