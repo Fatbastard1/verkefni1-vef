@@ -1,16 +1,14 @@
 <%- include('header') -%>
 
-<h1>Þetta er fyrirsögn ! </h1>
-
-<p>Halló heimur </p>
-
-<a href = "batman-ipsum"> Þetta er BATMAN </a>
 
 <main class='main'>
   <div class='articles'>
     <% greinaSafn.forEach((grein) => {%>
       <div class='article'>
-        <p> <%= grein.meta.title %></p>
+        <a href= <%= grein.meta.slug%>
+        <p> <%= grein.meta.slug %></p>
+
+        </div>
       </div>
       <%})%>
   </div>

@@ -41,34 +41,50 @@ async function readArticles(files){
     arr.push(obj);
   }
   return arr;
-
 }
 
 async function middleware(req,res,next){
-  greinasafn = [];
+  greinaSafn = [];
   greinar = await readArticles(myFiles);
   //console.log("greinar[1]" + greinar[1]);
   for (let i = 0; i < greinar.length; i++) {
    const obj = await metaMarked(greinar[i].toString('utf8'));
     greinaSafn.push(obj);
-   console.log(greinaSafn[i].html + " third");
+   //console.log(greinaSafn[1] + " third");
   }
 
   next();
 }
 
+function isArticle(data){
+  for (let i = 0; i < greinaSafn.length; i++) {
+    if(greinaSafn[i].meta.slug == data){
+      return true;
+    }
+  }
+  return false;
+}
+
+function getArticle(data){
+  for (let i = 0; i < greinaSafn.length; i++) {
+    if(greinaSafn[i].meta.slug == data){
+      return greinaSafn[i];
+    }
+  }
+}
 
 router.get('/', middleware,(req, res) => {
-  //res.send("greinaSafn[2]");
+//res.send(greinaSafn[0].meta.slug);
   res.render('index', {title: 'greinar', greinaSafn});
 });
 
-router.get(/foo.*$/, (req, res) => {
-  res.send(`Þú ert á ${req.originalUrl}`);
-});
 
-router.get('/bar/:data', (req, res) => {
-  res.send(`Data = ${req.params.data}`);
+router.get('/:slug', (req, res) => {
+  if(isArticle(req.params.data)){
+    const grein = getArticle(req.params.data);
+    res.render('article', {title: grein.meta.title, html: grein.html});
+  }
+  //res.send(`Slug = ${req.params.slug}`);
 });
 
 module.exports = router;
