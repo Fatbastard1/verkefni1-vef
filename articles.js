@@ -66,7 +66,9 @@ function isArticle(data){
 }
 
 function getArticle(data){
+  console.log(data + " data");
   for (let i = 0; i < greinaSafn.length; i++) {
+    console.log(greinaSafn[i].meta.slug);
     if(greinaSafn[i].meta.slug == data){
       return greinaSafn[i];
     }
@@ -80,9 +82,12 @@ router.get('/', middleware,(req, res) => {
 
 
 router.get('/:slug', (req, res) => {
-  if(isArticle(req.params.data)){
-    const grein = getArticle(req.params.data);
+  if(isArticle(req.params.slug)){
+    const grein = getArticle(req.params.slug);
     res.render('article', {title: grein.meta.title, html: grein.html});
+  }
+  else{
+    res.render('404', {title: 'síða fannst ekki'});
   }
   //res.send(`Slug = ${req.params.slug}`);
 });
