@@ -19,17 +19,22 @@ let greinaSafn = [];
 
 fs.readdir(filePath, function (err, files) {
     if (err) {
+
         throw err;
+
     }
     for (var i = 0; i < files.length; i++) {
+
       if(path.extname(files[i]) === ".md"){
-          //  console.log(files[i]);
+
           myFiles.push(files[i]);
-          //  console.log(myFiles[i] + " firstMiddleWare");
+
       }
     }
-    //console.log(myFiles);
+
 });
+
+
 
 
 
@@ -43,6 +48,9 @@ async function readArticles(files){
   return arr;
 }
 
+
+
+
 async function middleware(req,res,next){
   greinaSafn = [];
   greinar = await readArticles(myFiles);
@@ -50,11 +58,38 @@ async function middleware(req,res,next){
   for (let i = 0; i < greinar.length; i++) {
    const obj = await metaMarked(greinar[i].toString('utf8'));
     greinaSafn.push(obj);
-   //console.log(greinaSafn[1] + " third");
   }
-
+  sortArticles();
   next();
 }
+
+
+
+function sortArticles(){
+
+  for(let i = 0; i < greinaSafn.length; i++){
+    greinaSafn[i].meta.date = new Date(greinaSafn[i].meta.date);
+  }
+
+  greinaSafn.sort(function(a, b) {
+    return a.meta.date > b.meta.date ? -1 : a.meta.date < b.meta.date ? 1 : 0;
+  });
+
+  printArr();
+}
+
+
+
+
+function printArr(){
+  for (var i = 0; i < greinaSafn.length; i++) {
+    console.log(greinaSafn[i].meta.date);
+  }
+}
+
+
+
+
 
 function isArticle(data){
   for (let i = 0; i < greinaSafn.length; i++) {
@@ -65,15 +100,22 @@ function isArticle(data){
   return false;
 }
 
+
+
+
 function getArticle(data){
-  console.log(data + " data");
+
   for (let i = 0; i < greinaSafn.length; i++) {
-    console.log(greinaSafn[i].meta.slug);
+    
     if(greinaSafn[i].meta.slug == data){
       return greinaSafn[i];
     }
   }
 }
+
+
+
+
 
 router.get('/', middleware,(req, res) => {
 //res.send(greinaSafn[0].meta.slug);
