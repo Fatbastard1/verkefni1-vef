@@ -83,7 +83,9 @@ function sortArticles(){
 
 function printArr(){
   for (var i = 0; i < greinaSafn.length; i++) {
-    console.log(greinaSafn[i].meta.date);
+    console.log(greinaSafn[i].meta.date.getDate() + " day ");
+    console.log(greinaSafn[i].meta.date.getMonth()+ 1 + " Month");
+    console.log(greinaSafn[i].meta.date.getFullYear() + " year");
   }
 }
 
@@ -106,7 +108,7 @@ function isArticle(data){
 function getArticle(data){
 
   for (let i = 0; i < greinaSafn.length; i++) {
-    
+
     if(greinaSafn[i].meta.slug == data){
       return greinaSafn[i];
     }
@@ -119,7 +121,7 @@ function getArticle(data){
 
 router.get('/', middleware,(req, res) => {
 //res.send(greinaSafn[0].meta.slug);
-  res.render('index', {title: 'greinar', greinaSafn});
+  res.render('index', {title: 'Greinasafn', greinaSafn});
 });
 
 

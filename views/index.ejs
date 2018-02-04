@@ -1,27 +1,26 @@
 <%- include('header') -%>
 <header>
-  <img class='header__img' alt='sdf' src="header.jpg" ></img>
-  <h1 class="header_title"><%= title %></h1>
+   <img class='header_img' src="header.jpg" ></img>
+   <h1 class="header_title"><%= title %></h1>
 </header>
-
 <main class='main'>
-  <div class='articles'>
-    <% greinaSafn.forEach((grein) => {%>
+   <div class='articles'>
+      <% greinaSafn.forEach((grein) => {%>
       <div class='article'>
-        <a href= <%= grein.meta.slug %>
-        <p> <%= grein.meta.slug %></p>
-        <%if(grein.meta.image === undefined){ %>
-          <div class='article__NoImg'></div>
-          <%} else {%>
-            <div class='article_img'>
+         <a href= <%= grein.meta.slug %>
+         <p> <%= grein.meta.slug %></p>
+         <%if(grein.meta.image === undefined){ %>
+         <div class='image_notFound'></div>
+         <%} else {%>
+         <div class='article_image'>
             <img src=  <%= grein.meta.image %> />
-            </div>
-          <% } %>
          </div>
-         <p> <%= grein.meta.date.getDay() %>.<%= grein.meta.date.getMonth() %>.<%= grein.meta.date.getYear() %></p>
+         <% } %>
+         <p> <%= grein.meta.date.getDate() %>.<%= grein.meta.date.getMonth()+1 %>.<%= grein.meta.date.getFullYear() %></p>
       </div>
-      <%})%>
-  </div>
-</main>
 
+   </div>
+   <%})%>
+
+</main>
 <%- include('footer') -%>
