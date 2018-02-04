@@ -75,7 +75,7 @@ function sortArticles(){
     return a.meta.date > b.meta.date ? -1 : a.meta.date < b.meta.date ? 1 : 0;
   });
 
-  printArr();
+  //printArr();
 }
 
 
